@@ -2,10 +2,27 @@
   display: flex;
   flex-direction: column;
   padding: 0 30px;
+  span {
+    padding-left: 3px;
+  }
+}
+.custom-radio {
+  margin-right: 0;
+}
+
+.small-radio-buttons {
+  @extend .radio-buttons;
+  padding: 0 15px;
 }
 
 .radio-div {
   display: flex;
+  justify-content: center;
+  p {
+    display: flex;
+    margin: 0 10px;
+    align-items: flex-end;
+  }
 }
 
 .linear-select {

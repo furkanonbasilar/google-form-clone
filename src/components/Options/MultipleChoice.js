@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from "react";
+import React, { Component } from "react";
 import "./MultipleChoice.scss";
 import { Form } from "react-bootstrap";
 
@@ -34,7 +34,7 @@ export default class MultipleChoice extends Component {
 
     return [...arrIndexes].map(item => {
       return (
-        <MultipleChoiceAnswerUI
+        <MltpleAnswerUI
           id={item}
           isClicked={isClicked}
           removeQuestion={this.removeQuestionHandler}
@@ -49,7 +49,7 @@ export default class MultipleChoice extends Component {
     return (
       <>
         {this.renderOptions()}
-        {isClicked ? (
+        {isClicked ? ( //QuestionUI
           <div className="add-option">
             <Form.Check
               custom
@@ -74,7 +74,7 @@ export default class MultipleChoice extends Component {
   }
 }
 
-const MultipleChoiceAnswerUI = ({ isClicked, removeQuestion, id, length }) => {
+const MltpleAnswerUI = ({ isClicked, removeQuestion, id, length }) => {
   return (
     <div className="mltpl-choice">
       <Form.Check

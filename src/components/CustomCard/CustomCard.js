@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import "./CustomCard.scss";
 import MultipleChoice from "components/Options/MultipleChoice";
+import MultipleChoiceTable from "components/Options/MultipleChoiceTable/MultipleChoiceTable";
 import LinearScale from "components/Options/LinearScale";
+
 import { connect } from "react-redux";
 import { addQstnId } from "../../redux/questions/action";
 
@@ -17,7 +19,7 @@ const CustomCard = ({ id, addQstnId, slctdQstnID }) => {
         return <MultipleChoice isClicked={isClicked} />;
       }
       case "multiple-choice-table": {
-        return console.log("multiple-choice-table");
+        return <MultipleChoiceTable isClicked={isClicked} />;
       }
       case "linear-scale": {
         return <LinearScale isClicked={isClicked} />;
