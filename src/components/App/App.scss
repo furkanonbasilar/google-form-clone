@@ -1,0 +1,30 @@
+* {
+  box-sizing: border-box;
+}
+
+.App {
+  min-height: 100vh;
+  padding-top: 106px;
+  background-color: #f0ebf8;
+  input {
+    border: none;
+    padding-right: 0;
+    margin-left: 25px;
+    padding-left: 0;
+    border-bottom: 2px solid transparent;
+    &:hover {
+      border-bottom: 1px #f0ebf8 solid;
+      transition: none;
+    }
+    &:focus {
+      box-shadow: none;
+      border-bottom: 2px solid rgb(103, 58, 183);
+    }
+  }
+  select {
+    &:focus {
+      border-color: unset;
+      box-shadow: none;
+    }
+  }
+}

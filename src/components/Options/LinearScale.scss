@@ -1,0 +1,27 @@
+.radio-buttons {
+  display: flex;
+  flex-direction: column;
+  padding: 0 30px;
+}
+
+.radio-div {
+  display: flex;
+}
+
+.linear-select {
+  display: inline;
+  width: 10%;
+  border: none;
+}
+
+.optional-label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  input {
+    width: 25%;
+  }
+}
+.min-max-div {
+  margin-bottom: 10px;
+}

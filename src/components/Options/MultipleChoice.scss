@@ -1,0 +1,51 @@
+.form-control {
+  border-radius: unset;
+}
+
+#question-title {
+  margin-left: 0;
+  padding-left: 7px;
+}
+
+.mltpl-choice {
+  display: flex;
+  position: relative;
+}
+
+.add-option {
+  position: relative;
+  display: flex;
+  margin-bottom: 10px;
+
+  span {
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+  }
+  .add-option-input {
+    padding-right: 0;
+    width: 12.5%;
+  }
+  .optional-span {
+    cursor: pointer;
+    color: #1a73e8;
+  }
+}
+
+.radio-button {
+  padding: 0;
+  left: 3%;
+  top: 20%;
+  position: absolute;
+}
+.optional-input {
+  width: 80%;
+}
+
+.fa-times {
+  color: #5f6368;
+  top: 17%;
+  position: absolute;
+  right: 3%;
+  font-size: 25px;
+}
