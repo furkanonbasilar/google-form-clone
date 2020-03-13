@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Header.scss";
 const Header = () => {
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
   return (
     <div className="header">
       <div className="questions-answers">

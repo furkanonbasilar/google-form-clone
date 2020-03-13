@@ -1,10 +1,6 @@
 import { combineReducers } from "redux";
-import questionsReducer from "./questions/reducer";
-import mltpleChoiceTableReducer from "./mltplchoicetable/reducer";
+import formReducer from "./form/reducer";
 
-const rootReducers = combineReducers({
-  questions: questionsReducer,
-  mltpleTable: mltpleChoiceTableReducer
-});
+const rootReducers = combineReducers({ form: formReducer });
 
 export default rootReducers;

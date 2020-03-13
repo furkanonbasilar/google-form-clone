@@ -1,44 +1,45 @@
 import React, { Component } from "react";
+
+import { connect } from "react-redux";
+
 import "./App.scss";
 import Header from "components/Header/Header";
-import { connect } from "react-redux";
+import { addCard } from "redux/form/action";
 import CustomCard from "components/CustomCard/CustomCard";
-import { changeFocusOnCard } from "redux/questions/action";
 
 class App extends Component {
-  state = {
-    questions: []
+  componentDidMount = () => this.addNewCard();
+
+  addNewCard = () => {
+    const { addCard } = this.props;
+
+    addCard();
   };
-  componentDidMount() {
-    this.addQuestion();
-  }
-  addQuestion = () => {
-    const { questions } = this.state;
-    this.setState({
-      questions: [...questions, <CustomCard id={questions.length} />]
-    });
-  };
+
   render() {
-    const { questions } = this.state;
+    const { cards } = this.props;
+
     return (
       <div className="App">
         <Header />
-        {questions}
-        <button
-          onClick={() => {
-            this.addQuestion();
-            this.props.changeFocusOnCard();
-          }}
-        >
-          +
-        </button>
+        {cards.map((c, index) => (
+          <CustomCard data={c} index={index} />
+        ))}
+        <div className="button-wrapper">
+          <i
+            className="fas fa-plus-circle add-card-button"
+            onClick={this.addNewCard}
+          ></i>
+        </div>
       </div>
     );
   }
 }
 
-const mapDispatchToProps = {
-  changeFocusOnCard
+const mapStateToProps = state => {
+  return { cards: state.form.cards };
 };
 
-export default connect(null, mapDispatchToProps)(App);
+const mapDispatchToProps = { addCard };
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

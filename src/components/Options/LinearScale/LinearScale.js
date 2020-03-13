@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Form, Row, Col } from "react-bootstrap";
+import { Form } from "react-bootstrap";
+import { connect } from "react-redux";
+import { updLinearScale } from "redux/form/action";
 import "./LinearScale.scss";
 
-const LinearScale = ({ isClicked }) => {
-  // const [minumumForAnswerUI, setMinumumForAnswerUI] = useState(null);
-  const [optnlFrst, setOptnlFrst] = useState("");
-  const [optnlScnd, setOptnlScnd] = useState("");
-  const [minumum, setMinumum] = useState(1);
-  const [maximum, setMaximum] = useState(5);
-
-  useEffect(() => {}, [minumum, maximum]);
-  console.log(maximum);
+const LinearScale = ({ isClicked, data, updLinearScale }) => {
   const renderAnswerUI = () => {
-    return [...Array(minumum === 0 ? maximum + 1 : maximum)].map((_, index) => (
-      <div className={maximum < 8 ? "radio-buttons" : "small-radio-buttons"}>
-        <span>{minumum === 0 ? index : index + 1}</span>
+    return [
+      ...Array(data.minValue === 0 ? data.maxValue + 1 : data.maxValue)
+    ].map((_, index) => (
+      <div
+        className={data.maxValue < 8 ? "radio-buttons" : "small-radio-buttons"}
+      >
+        <span>{data.minValue === 0 ? index : index + 1}</span>
         <Form.Check custom inline name="linear-scale" label="" type={"radio"} />
       </div>
     ));
@@ -27,8 +25,10 @@ const LinearScale = ({ isClicked }) => {
           <Form.Control
             as="select"
             className="linear-select"
-            value={minumum}
-            onChange={event => setMinumum(parseInt(event.target.value))}
+            value={data.minValue}
+            onChange={event =>
+              updLinearScale("MIN_VALUE", parseInt(event.target.value))
+            }
           >
             <option value={0}>0</option>
             <option value={1}>1</option>
@@ -37,8 +37,10 @@ const LinearScale = ({ isClicked }) => {
           <Form.Control
             as="select"
             className="linear-select"
-            onChange={event => setMaximum(parseInt(event.target.value))}
-            value={maximum}
+            onChange={event =>
+              updLinearScale("MAX_VALUE", parseInt(event.target.value))
+            }
+            value={data.maxValue}
           >
             <option value={2}>2</option>
             <option value={3}>3</option>
@@ -52,21 +54,21 @@ const LinearScale = ({ isClicked }) => {
           </Form.Control>
         </div>
         <div className="optional-label">
-          <span>{minumum}</span>
+          <span>{data.minValue}</span>
           <Form.Control
             type="text"
-            value={optnlFrst}
+            value={data.minTitle}
             placeholder="Etiket(isteğe bağlı)"
-            onChange={event => setOptnlFrst(event.target.value)}
+            onChange={event => updLinearScale("MIN_TITLE", event.target.value)}
           />
         </div>
         <div className="optional-label">
-          <span>{maximum}</span>
+          <span>{data.maxValue}</span>
           <Form.Control
             type="text"
-            value={optnlScnd}
+            value={data.maxTitle}
             placeholder="Etiket(isteğe bağlı)"
-            onChange={event => setOptnlScnd(event.target.value)}
+            onChange={event => updLinearScale("MAX_TITLE", event.target.value)}
           />
         </div>
       </div>
@@ -78,13 +80,17 @@ const LinearScale = ({ isClicked }) => {
         renderQstnUI()
       ) : (
         <div className="radio-div">
-          <p>{optnlFrst}</p>
+          <p>{data.minTitle}</p>
           {renderAnswerUI()}
-          <p>{optnlScnd}</p>
+          <p>{data.maxTitle}</p>
         </div>
       )}
     </>
   );
 };
 
-export default LinearScale;
+const mapDispatchToProps = {
+  updLinearScale
+};
+
+export default connect(null, mapDispatchToProps)(LinearScale);

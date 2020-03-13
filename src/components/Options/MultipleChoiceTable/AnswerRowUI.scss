@@ -1,0 +1,15 @@
+.mltpl-choice-table {
+  display: flex;
+  margin-bottom: 20px;
+  span {
+    width: 25%;
+  }
+  .radio-button {
+    position: unset;
+  }
+  .radio-button-div {
+    width: 75%;
+    display: flex;
+    justify-content: space-around;
+  }
+}

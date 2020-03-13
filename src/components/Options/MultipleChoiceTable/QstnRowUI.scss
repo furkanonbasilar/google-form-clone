@@ -1,0 +1,14 @@
+.question-row-div {
+  display: flex;
+  position: relative;
+  span {
+    margin: auto 0;
+  }
+  input {
+    margin-left: 10px;
+  }
+  .fa-times {
+    position: absolute;
+    right: 4%;
+  }
+}

@@ -1,88 +1,105 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import "./CustomCard.scss";
-import MultipleChoice from "components/Options/MultipleChoice";
+import MultipleChoice from "components/Options/MultipleChoice/MultipleChoice";
 import MultipleChoiceTable from "components/Options/MultipleChoiceTable/MultipleChoiceTable";
-import LinearScale from "components/Options/LinearScale";
+import LinearScale from "components/Options/LinearScale/LinearScale";
 
 import { connect } from "react-redux";
-import { addQstnId } from "../../redux/questions/action";
+import {
+  selectCard,
+  updCardTitle,
+  updCardType,
+  removeCard,
+  copyCard
+} from "../../redux/form/action";
 
-const CustomCard = ({ id, addQstnId, slctdQstnID }) => {
-  const [isClicked, setIsClicked] = useState(true);
-  const [questionTitle, setQuestionTitle] = useState("");
-  const [selQuestType, setSelQuestType] = useState("multiple-choice");
+const CustomCard = ({
+  data,
+  index,
+  selCardInd,
+  selectCard,
+  updCardTitle,
+  updCardType,
+  removeCard,
+  copyCard
+}) => {
+  const isClicked = index === selCardInd;
 
   const renderChoice = () => {
-    switch (selQuestType) {
-      case "multiple-choice": {
-        return <MultipleChoice isClicked={isClicked} />;
+    switch (data.type) {
+      case "MULTI_CHOICE": {
+        return <MultipleChoice isClicked={isClicked} data={data.options} />;
       }
-      case "multiple-choice-table": {
-        return <MultipleChoiceTable isClicked={isClicked} />;
+      case "MULTI_TABLE": {
+        return (
+          <MultipleChoiceTable isClicked={isClicked} data={data.options} />
+        );
       }
-      case "linear-scale": {
-        return <LinearScale isClicked={isClicked} />;
+      case "LINEAR_SCALE": {
+        return <LinearScale isClicked={isClicked} data={data.options[0]} />;
       }
     }
   };
-
-  useEffect(() => {
-    setIsClicked(id === slctdQstnID);
-  }, [slctdQstnID, isClicked]);
-
   return (
-    <div
-      className={"card" + (isClicked ? " card-active" : "")}
-      onClick={() => {
-        addQstnId(id);
-      }}
-    >
-      {isClicked ? (
-        <Form>
-          <Form.Group as={Row}>
-            <Col className="col-7">
-              <Form.Control
-                type="text"
-                placeholder="Soru"
-                onChange={event => setQuestionTitle(event.target.value)}
-                value={questionTitle}
-                id="question-title"
-              />
-            </Col>
-            <Col className="col-1"></Col>
-            <Col className="col-4 question-col">
-              <Form.Control
-                value={selQuestType}
-                as="select"
-                onChange={event => setSelQuestType(event.target.value)}
-              >
-                <option value="multiple-choice">Çoktan seçmeli</option>
-                <option value="multiple-choice-table">
-                  Çoktan seçmeli tablosu
-                </option>
-                <option value="linear-scale">Doğrusal ölçek</option>
-              </Form.Control>
-            </Col>
-          </Form.Group>
-        </Form>
-      ) : (
-        <p>{questionTitle === "" ? "Soru" : questionTitle}</p>
-      )}
+    <div className={"card" + (isClicked ? " card-active" : "")}>
+      <div className="card-wrapper" onClick={() => selectCard(data.id)}>
+        {isClicked ? (
+          <Form>
+            <Form.Group as={Row}>
+              <Col className="col-7">
+                <Form.Control
+                  type="text"
+                  placeholder="Soru"
+                  onChange={event => updCardTitle(event.target.value)}
+                  value={data.title}
+                  id="question-title"
+                />
+              </Col>
+              <Col className="col-1"></Col>
+              <Col className="col-4 question-col">
+                <Form.Control
+                  value={data.type}
+                  as="select"
+                  onChange={event => {
+                    updCardType(event.target.value);
+                  }}
+                >
+                  <option value="MULTI_CHOICE">Çoktan seçmeli</option>
+                  <option value="MULTI_TABLE">Çoktan seçmeli tablosu</option>
+                  <option value="LINEAR_SCALE">Doğrusal ölçek</option>
+                </Form.Control>
+              </Col>
+            </Form.Group>
+          </Form>
+        ) : (
+          <p>{data.title === "" ? "Soru" : data.title}</p>
+        )}
 
-      {renderChoice()}
+        {renderChoice()}
+      </div>
+      {isClicked ? (
+        <div className="card-buttons">
+          <i className="far fa-copy" onClick={copyCard}></i>
+          <i className="far fa-trash-alt" onClick={removeCard}></i>
+        </div>
+      ) : null}
     </div>
   );
 };
 
 const mapStateToProps = state => {
   return {
-    slctdQstnID: state.questions.slctdQstnID
+    selCardInd: state.form.selCardInd
   };
 };
 
 const mapDispatchToProps = {
-  addQstnId
+  selectCard,
+  updCardTitle,
+  updCardType,
+  removeCard,
+  copyCard
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CustomCard);

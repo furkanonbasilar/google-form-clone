@@ -1,0 +1,12 @@
+.row-title {
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  line-height: 20px;
+  color: #202124;
+  font-weight: 500;
+  opacity: 1;
+}
+
+.col-title {
+  @extend .row-title;
+}
