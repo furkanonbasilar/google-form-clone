@@ -39,6 +39,10 @@
     top: 50%;
   }
   .add-card-button {
+    cursor: pointer;
+    &:active {
+      transform: scale(0.9) translate(50%, -50%);
+    }
     top: 50%;
     right: 50%;
     transform: translate(50%, -50%);
